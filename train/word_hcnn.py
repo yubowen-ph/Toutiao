@@ -34,22 +34,12 @@ val_seq = val_word_seq
 print('val_seq...shape', val_seq.shape)
 print('val_label...shape', val_label.shape)
 print(train.content.values.shape)
+
+
+
 word_embed_weight = np.load(Config.word_embed_weight_path)
 
 model = get_hcnn(Config.sentence_num, Config.sentence_word_length, word_embed_weight)
-
-# for i in range(15):
-#     if i==8:
-#         K.set_value(model.optimizer.lr, 0.0001)
-#     if i==12:
-#         for l in trainable_layer:
-#             model.get_layer(l).trainable = True
-#     model.fit_generator(
-        # train_batch_generator(train.content.values, train.label.values, batch_size=batch_size),
-#         epochs = 1,
-#         steps_per_epoch = int(train.shape[0]/batch_size),
-#         validation_data = (val_seq, val_label)
-#     )
 
 for i in range(15):
     if i==8:
@@ -57,17 +47,12 @@ for i in range(15):
     if i==12:
         for l in trainable_layer:
             model.get_layer(l).trainable = True
-    model.fit(
-       x = train.content.values, 
-       y = train.label.values,
+    model.fit_generator(
+        train_batch_generator(train.content.values, train.label.values, batch_size=batch_size),
         epochs = 1,
-        # steps_per_epoch = int(train.shape[0]/batch_size),
-        validation_split = 0.2,
-        batch_size = batch_size,
-        # validation_data = (val_seq, val_label)
+        steps_per_epoch = int(train.shape[0]/batch_size),
+        validation_data = (val_seq, val_label)
     )
-
-
     pred = np.squeeze(model.predict(val_seq))
     pre,rec,f1 = score(pred, val_label)
     print(pre,rec,f1)
