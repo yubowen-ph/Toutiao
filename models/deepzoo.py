@@ -1,6 +1,6 @@
 import sys
 sys.path.append("..")
-from config import *
+from conf.config import *
 import keras
 from keras.models import *
 from keras.layers import *
@@ -157,7 +157,7 @@ def get_han(sent_num, sent_length, embed_weight, mask_zero=False):
     sent_bigru = Bidirectional(GRU(128, return_sequences=True))(review_encode)
     sent_attention = Attention(sent_num)(sent_bigru)
     fc = Activation(activation="relu")(BatchNormalization()(Dense(256)(sent_attention)))
-    output = Dense(2,activation="softmax")(fc)
+    output = Dense(4,activation="softmax")(fc)
     model = Model(review_input, output)
     model.compile(loss='categorical_crossentropy',optimizer="adam",metrics=['accuracy'])
     return model
