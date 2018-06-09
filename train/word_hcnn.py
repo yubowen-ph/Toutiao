@@ -45,7 +45,7 @@ model = get_hcnn(Config.sentence_num, Config.sentence_word_length, word_embed_we
 #         for l in trainable_layer:
 #             model.get_layer(l).trainable = True
 #     model.fit_generator(
-        train_batch_generator(train.content.values, train.label.values, batch_size=batch_size),
+        # train_batch_generator(train.content.values, train.label.values, batch_size=batch_size),
 #         epochs = 1,
 #         steps_per_epoch = int(train.shape[0]/batch_size),
 #         validation_data = (val_seq, val_label)
