@@ -62,7 +62,8 @@ for i in range(15):
        y = train.label.values,
         epochs = 1,
         steps_per_epoch = int(train.shape[0]/batch_size),
-        validation_split = 0.2
+        validation_split = 0.2,
+        batch_size = batch_size
         # validation_data = (val_seq, val_label)
     )
 
